@@ -21,13 +21,9 @@ mongoose.connect(MONGO_URI, {
 .catch(err => console.error("❌ Error connecting to MongoDB:", err));
 
 const server = http.createServer(app);
-const cors = require("cors");
-app.use(cors({
-    origin: "*", // Change this to your frontend URL for better security
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"]
-}));
-
+const io = new Server(server, {
+    cors: { origin: "*", methods: ["GET", "POST"] }
+});
 
 app.use("/api", actionRoutes); // ✅ Add API route
 
